@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="FlightsDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Airline">
+    <Key>
+      <PropertyRef Name="AirlinesID" />
+    </Key>
+    <Property Name="AirlinesID" Type="Int32" Nullable="false" />
+    <Property Name="AirlinesName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Travels" Relationship="Self.FK__Travel__Airlines__25869641" FromRole="Airlines" ToRole="Travel" />
+  </EntityType>
+  <EntityType Name="Travel">
+    <Key>
+      <PropertyRef Name="SourceCity" />
+      <PropertyRef Name="Destination" />
+      <PropertyRef Name="TravelDate" />
+      <PropertyRef Name="Price" />
+      <PropertyRef Name="TravelTime" />
+    </Key>
+    <Property Name="AirlinesID" Type="Int32" />
+    <Property Name="SourceCity" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Destination" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="TravelDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Price" Type="Double" Nullable="false" />
+    <Property Name="TravelTime" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Airline" Relationship="Self.FK__Travel__Airlines__25869641" FromRole="Travel" ToRole="Airlines" />
+  </EntityType>
+  <Association Name="FK__Travel__Airlines__25869641">
+    <End Role="Airlines" Type="Self.Airline" Multiplicity="0..1" />
+    <End Role="Travel" Type="Self.Travel" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Airlines">
+        <PropertyRef Name="AirlinesID" />
+      </Principal>
+      <Dependent Role="Travel">
+        <PropertyRef Name="AirlinesID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="FlightsDBContext" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Airlines" EntityType="Self.Airline" />
+    <EntitySet Name="Travels" EntityType="Self.Travel" />
+    <AssociationSet Name="FK__Travel__Airlines__25869641" Association="Self.FK__Travel__Airlines__25869641">
+      <End Role="Airlines" EntitySet="Airlines" />
+      <End Role="Travel" EntitySet="Travels" />
+    </AssociationSet>
+    <FunctionImport Name="uspUpdateFilghtPrice">
+      <Parameter Name="AirlinesID" Mode="In" Type="Int32" />
+      <Parameter Name="price" Mode="In" Type="Double" />
+      <Parameter Name="traveldate" Mode="In" Type="DateTime" />
+    </FunctionImport>
+  </EntityContainer>
+</Schema>

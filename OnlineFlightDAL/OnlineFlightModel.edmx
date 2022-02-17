@@ -1,0 +1,170 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="FlightsDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Airlines">
+          <Key>
+            <PropertyRef Name="AirlinesID" />
+          </Key>
+          <Property Name="AirlinesID" Type="int" Nullable="false" />
+          <Property Name="AirlinesName" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'FlightsDB.dbo.Travel' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Travel">
+          <Key>
+            <PropertyRef Name="SourceCity" />
+            <PropertyRef Name="Destination" />
+            <PropertyRef Name="TravelDate" />
+            <PropertyRef Name="Price" />
+            <PropertyRef Name="TravelTime" />
+          </Key>
+          <Property Name="AirlinesID" Type="int" />
+          <Property Name="SourceCity" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Destination" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="TravelDate" Type="datetime" Nullable="false" />
+          <Property Name="Price" Type="float" Nullable="false" />
+          <Property Name="TravelTime" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Travel__Airlines__25869641">
+          <End Role="Airlines" Type="Self.Airlines" Multiplicity="0..1" />
+          <End Role="Travel" Type="Self.Travel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Airlines">
+              <PropertyRef Name="AirlinesID" />
+            </Principal>
+            <Dependent Role="Travel">
+              <PropertyRef Name="AirlinesID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="uspUpdateFilghtPrice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="AirlinesID" Type="int" Mode="In" />
+          <Parameter Name="price" Type="float" Mode="In" />
+          <Parameter Name="traveldate" Type="datetime" Mode="In" />
+        </Function>
+        <EntityContainer Name="FlightsDBModelStoreContainer">
+          <EntitySet Name="Airlines" EntityType="Self.Airlines" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Travel" EntityType="Self.Travel" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Travel].[AirlinesID] AS [AirlinesID], 
+    [Travel].[SourceCity] AS [SourceCity], 
+    [Travel].[Destination] AS [Destination], 
+    [Travel].[TravelDate] AS [TravelDate], 
+    [Travel].[Price] AS [Price], 
+    [Travel].[TravelTime] AS [TravelTime]
+    FROM [dbo].[Travel] AS [Travel]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__Travel__Airlines__25869641" Association="Self.FK__Travel__Airlines__25869641">
+            <End Role="Airlines" EntitySet="Airlines" />
+            <End Role="Travel" EntitySet="Travel" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FlightsDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Airline">
+          <Key>
+            <PropertyRef Name="AirlinesID" />
+          </Key>
+          <Property Name="AirlinesID" Type="Int32" Nullable="false" />
+          <Property Name="AirlinesName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Travels" Relationship="Self.FK__Travel__Airlines__25869641" FromRole="Airlines" ToRole="Travel" />
+        </EntityType>
+        <EntityType Name="Travel">
+          <Key>
+            <PropertyRef Name="SourceCity" />
+            <PropertyRef Name="Destination" />
+            <PropertyRef Name="TravelDate" />
+            <PropertyRef Name="Price" />
+            <PropertyRef Name="TravelTime" />
+          </Key>
+          <Property Name="AirlinesID" Type="Int32" />
+          <Property Name="SourceCity" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Destination" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TravelDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Price" Type="Double" Nullable="false" />
+          <Property Name="TravelTime" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Airline" Relationship="Self.FK__Travel__Airlines__25869641" FromRole="Travel" ToRole="Airlines" />
+        </EntityType>
+        <Association Name="FK__Travel__Airlines__25869641">
+          <End Role="Airlines" Type="Self.Airline" Multiplicity="0..1" />
+          <End Role="Travel" Type="Self.Travel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Airlines">
+              <PropertyRef Name="AirlinesID" />
+            </Principal>
+            <Dependent Role="Travel">
+              <PropertyRef Name="AirlinesID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FlightsDBContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Airlines" EntityType="Self.Airline" />
+          <EntitySet Name="Travels" EntityType="Self.Travel" />
+          <AssociationSet Name="FK__Travel__Airlines__25869641" Association="Self.FK__Travel__Airlines__25869641">
+            <End Role="Airlines" EntitySet="Airlines" />
+            <End Role="Travel" EntitySet="Travels" />
+          </AssociationSet>
+          <FunctionImport Name="uspUpdateFilghtPrice">
+            <Parameter Name="AirlinesID" Mode="In" Type="Int32" />
+            <Parameter Name="price" Mode="In" Type="Double" />
+            <Parameter Name="traveldate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="FlightsDBModelStoreContainer" CdmEntityContainer="FlightsDBContext">
+          <EntitySetMapping Name="Airlines">
+            <EntityTypeMapping TypeName="FlightsDBModel.Airline">
+              <MappingFragment StoreEntitySet="Airlines">
+                <ScalarProperty Name="AirlinesID" ColumnName="AirlinesID" />
+                <ScalarProperty Name="AirlinesName" ColumnName="AirlinesName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Travels">
+            <EntityTypeMapping TypeName="FlightsDBModel.Travel">
+              <MappingFragment StoreEntitySet="Travel">
+                <ScalarProperty Name="AirlinesID" ColumnName="AirlinesID" />
+                <ScalarProperty Name="SourceCity" ColumnName="SourceCity" />
+                <ScalarProperty Name="Destination" ColumnName="Destination" />
+                <ScalarProperty Name="TravelDate" ColumnName="TravelDate" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="TravelTime" ColumnName="TravelTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="uspUpdateFilghtPrice" FunctionName="FlightsDBModel.Store.uspUpdateFilghtPrice" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

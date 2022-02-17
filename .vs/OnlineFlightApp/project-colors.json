@@ -1,0 +1,31 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "e12830cc-fa6d-41a9-a990-17615d267501": {
+      "ProjectGuid": "e12830cc-fa6d-41a9-a990-17615d267501",
+      "DisplayName": "OnlineFlightMVC",
+      "ColorIndex": 0
+    },
+    "5ff96f66-8e52-43b7-9ce0-0ecbc0984146": {
+      "ProjectGuid": "5ff96f66-8e52-43b7-9ce0-0ecbc0984146",
+      "DisplayName": "OnlineFlightDTO",
+      "ColorIndex": 1
+    },
+    "a5866eef-4a17-4124-979e-42ff76d78063": {
+      "ProjectGuid": "a5866eef-4a17-4124-979e-42ff76d78063",
+      "DisplayName": "OnlineFlightAPI",
+      "ColorIndex": 2
+    },
+    "4e60410c-5d89-4a88-9a9e-e073befc680c": {
+      "ProjectGuid": "4e60410c-5d89-4a88-9a9e-e073befc680c",
+      "DisplayName": "OnlineFlightBL",
+      "ColorIndex": 3
+    },
+    "9c29d27e-b884-47bf-b47a-1d20c652d895": {
+      "ProjectGuid": "9c29d27e-b884-47bf-b47a-1d20c652d895",
+      "DisplayName": "OnlineFlightDAL",
+      "ColorIndex": 4
+    }
+  },
+  "NextColorIndex": 5
+}

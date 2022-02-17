@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="FlightsDBModelStoreContainer" CdmEntityContainer="FlightsDBContext">
+    <EntitySetMapping Name="Airlines">
+      <EntityTypeMapping TypeName="FlightsDBModel.Airline">
+        <MappingFragment StoreEntitySet="Airlines">
+          <ScalarProperty Name="AirlinesID" ColumnName="AirlinesID" />
+          <ScalarProperty Name="AirlinesName" ColumnName="AirlinesName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Travels">
+      <EntityTypeMapping TypeName="FlightsDBModel.Travel">
+        <MappingFragment StoreEntitySet="Travel">
+          <ScalarProperty Name="AirlinesID" ColumnName="AirlinesID" />
+          <ScalarProperty Name="SourceCity" ColumnName="SourceCity" />
+          <ScalarProperty Name="Destination" ColumnName="Destination" />
+          <ScalarProperty Name="TravelDate" ColumnName="TravelDate" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="TravelTime" ColumnName="TravelTime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="uspUpdateFilghtPrice" FunctionName="FlightsDBModel.Store.uspUpdateFilghtPrice" />
+  </EntityContainerMapping>
+</Mapping>

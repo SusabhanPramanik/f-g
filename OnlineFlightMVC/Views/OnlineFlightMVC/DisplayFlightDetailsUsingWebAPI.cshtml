@@ -1,0 +1,64 @@
+﻿@model IEnumerable<OnlineFlightMVC.Models.TravelModel>
+
+@{
+    ViewBag.Title = "DisplayFlightDetailsUsingWebAPI";
+}
+
+<h2>DisplayFlightDetailsUsingWebAPI</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.airlineId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.airlineName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.sourceCity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.destinationCity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.travelDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.travelTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.price)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.airlineId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.airlineName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.sourceCity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.destinationCity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.travelDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.travelTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.price)
+        </td>
+    </tr>
+}
+
+</table>
